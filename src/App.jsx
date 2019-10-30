@@ -1,30 +1,32 @@
-import React, { Component,lazy,Suspense } from 'react';
-const About = lazy(()=> import(/* webpackChunkName:'about' */'./About.jsx'))
-// ErrorBoundary
-// componentDidCatch
+import React, { Component,memo } from 'react';
+//适用于一级状态值的判断
+/**
+ * PureComponent 相当于 ComponentDidUpdate()
+ * 自身会有渲染判断
+ * 无状态组件（function）时,使用memo包裹
+ * @returns
+ * @memberof Foo
+ */
+const Foo = memo(function Foo(props) {
+     console.log('foo render')
+    return <div>{props.person.age}</div>
+})
 export class App extends Component {
-  state = {
-    hasError:false
-  }
-  static getDerivedStateFromError(){
-    return {
-      hasError:true,
+  state={
+    count:0,
+    person:{
+      age:1,
     }
   }
-  // componentDidCatch(){
-  //   this.setState({
-  //     hasError:true
-  //   })
-  // }
+  callback=()=>{ 
+    // this? 
+  }
   render() {
-    if(this.state.hasError){
-      return <div>HAS ERROR</div>
-    }
+    const {person} = this.state
     return (
       <div>
-      <Suspense fallback={<div>Loading</div>}>
-        <About/>
-      </Suspense>
+      <button onClick={()=>{ person.age++; this.setState({person})}}>Add</button>
+        <Foo person={person} cb={this.callback}/> 
       </div>
     );
   }
