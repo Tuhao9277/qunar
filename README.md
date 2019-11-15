@@ -130,4 +130,21 @@ export default App;
 
 - 副作用的关注点分离 （数据渲染之外的，如网络请求，ls存储） 
 
-  
+  # PWA
+  渐进式网络应用
+## 组成技术
+- Service Worker（webWorker 独立于浏览器主线程的环境，执行较复杂的界面操作）
+  - 常驻内存运行
+  - 代理网络请求
+  - 以来https
+- Promise
+- fetch 比xmlhttpRequest 更简洁
+  - promise风格
+- cacge API
+  -  支持资源的缓存系统
+  - 缓存资源
+  - 依赖ServiceWorker 代理网络请求
+  - 支持离线程序运行
+- Notification APi
+  - 消息推送
+  - 依赖用户授权
