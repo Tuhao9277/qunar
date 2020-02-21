@@ -82,6 +82,7 @@ export function setSelectedCity(city) {
   }
 }
 export function showDateSelector() {
+  console.log(0)
   return {
     type: ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
     payload: true,

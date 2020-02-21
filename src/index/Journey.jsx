@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import switchImg from './imgs/switch.svg'
 import './Journey.css'
 
@@ -14,7 +14,7 @@ const Journey = props => {
         }}
       >
         <input
-          className="journey-from"
+          className={classNames('journey-from','journey-input')}
           name="from"
           readOnly
           type="text"
@@ -31,7 +31,7 @@ const Journey = props => {
         }}
       >
         <input
-          className="journey-to"
+        className={classNames('journey-to','journey-input')}
           name="to"
           readOnly
           type="text"
