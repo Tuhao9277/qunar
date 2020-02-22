@@ -1,3 +1,4 @@
+import { lsSave, lsReadObj } from '../utils/ls'
 export const ACTION_SET_FROM = 'SET_FROM'
 export const ACTION_SET_TO = 'SET_TO'
 export const ACTION_SET_IS_CITY_SELECTOR_VISIBLE =
@@ -73,6 +74,7 @@ export function setDepartDate(departDate) {
 export function setSelectedCity(city) {
   return (dispatch, getState) => {
     const { currentSelectingLeftCity } = getState()
+    console.log(currentSelectingLeftCity)
     if (currentSelectingLeftCity) {
       dispatch(setFrom(city))
     } else {
@@ -104,11 +106,25 @@ export function fetchCityData() {
   return (dispatch, getState) => {
     const { isLoadingCityData } = getState()
     if (!isLoadingCityData) {
+      const cache = lsReadObj('city_data_cache')
+      if (cache) {
+        const { expires, data } = cache
+        if (Date.now() < expires) {
+          dispatch(setCityData(data))
+          return
+        }
+      }
       dispatch(setIsLoadingCityData(true))
       fetch('/rest/cities?_' + Date.now())
         .then(res => res.json())
-        .then(cityData => dispatch(setCityData(cityData)))
-        .then(cityData => dispatch(setIsLoadingCityData(false)))
+        .then(cityData => {
+          dispatch(setCityData(cityData))
+          lsSave('city_data_cache', {
+            exires: Date.now() + 60 * 1000,
+            data: cityData,
+          })
+          dispatch(setIsLoadingCityData(false))
+        })
         .catch(() => {
           dispatch(setIsLoadingCityData(false))
         })

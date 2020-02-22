@@ -7,7 +7,7 @@ export default createStore(
     from: '北京',
     to:'上海',
     isCitySelectorVisible:false,
-    currentySelectingLeftCity:false,
+    currentSelectingLeftCity:false,
     cityData:null,
     isLoadingCityData:false,
     departDate: Date.now(),

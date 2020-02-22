@@ -40,7 +40,7 @@ export default {
     }
     return state
   },
-  currentySelectingLeftCity(state=false, action) {
+  currentSelectingLeftCity(state=false, action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_CURRENTY_SELECTING_LEFT_CITY: {

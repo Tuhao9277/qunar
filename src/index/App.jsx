@@ -17,6 +17,7 @@ import {
   setDepartDate,
   toggleHighSpeed,
   fetchCityData,
+  setSelectedCity,
 } from './actions'
 import './App.css'
 import { h0 } from '../components/fp'
@@ -41,6 +42,7 @@ const App = props => {
     return bindActionCreators(
       {
         onBack: hideCitySelector,
+        onSelect:setSelectedCity,
         fetchCityData,
       },
       dispatch,

@@ -14,7 +14,7 @@ const Journey = props => {
         }}
       >
         <input
-          className={classNames('journey-from','journey-input')}
+          className={classNames('journey-from', 'journey-input')}
           name="from"
           readOnly
           type="text"
@@ -31,7 +31,7 @@ const Journey = props => {
         }}
       >
         <input
-        className={classNames('journey-to','journey-input')}
+          className={classNames('journey-to', 'journey-input')}
           name="to"
           readOnly
           type="text"
