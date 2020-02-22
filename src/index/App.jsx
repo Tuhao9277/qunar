@@ -15,6 +15,8 @@ import {
   hideCitySelector,
   hideDateSelector,
   setDepartDate,
+  toggleHighSpeed,
+  fetchCityData,
 } from './actions'
 import './App.css'
 import { h0 } from '../components/fp'
@@ -28,18 +30,23 @@ const App = props => {
     departDate,
     cityData,
     isLoadingCityData,
+    highSpeed,
   } = props
+  // 返回按钮
   const onBack = useCallback(() => {
     window.history.back()
   }, [])
+  //城市选择
   const citySelectorCbs = useMemo(() => {
     return bindActionCreators(
       {
         onBack: hideCitySelector,
+        fetchCityData,
       },
       dispatch,
     )
   }, [dispatch])
+  // 显示日期图层
   const departDateCbs = useMemo(() => {
     return bindActionCreators(
       {
@@ -48,7 +55,7 @@ const App = props => {
       dispatch,
     )
   }, [dispatch])
-
+  // 交换始发站
   const cbs = useMemo(() => {
     return bindActionCreators(
       {
@@ -58,6 +65,7 @@ const App = props => {
       dispatch,
     )
   }, [dispatch])
+  // 隐藏日期图层
   const dateSelectorCbs = useMemo(() => {
     return bindActionCreators(
       {
@@ -66,6 +74,7 @@ const App = props => {
       dispatch,
     )
   }, [dispatch])
+  // 点击日期回调
   const onSelectDate = useCallback(
     day => {
       if (!day || day < h0()) {
@@ -76,15 +85,24 @@ const App = props => {
     },
     [dispatch],
   )
+  // 控制只显示高铁/动车
+  const highSpeedCbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        toggle: toggleHighSpeed,
+      },
+      dispatch,
+    )
+  }, [dispatch])
   return (
     <div>
       <div className="header-wrapper">
         <Header onBack={onBack} title="火车票" />
       </div>
-      <form className="form">
+      <form className="form" action="./query.html">
         <Journey from={from} to={to} {...cbs} />
         <DepartDate time={departDate} {...departDateCbs} />
-        <HighSpeed />
+        <HighSpeed highSpeed={highSpeed} {...highSpeedCbs} />
         <Submit />
       </form>
       <CitySelector

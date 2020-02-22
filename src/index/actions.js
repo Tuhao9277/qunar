@@ -45,7 +45,7 @@ export function toggleHighSpeed() {
 }
 
 export function showCitySelector(currentSelectingLeftCity) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
       payload: true,
@@ -57,9 +57,9 @@ export function showCitySelector(currentSelectingLeftCity) {
   }
 }
 export function hideCitySelector() {
-  return  {
-      type: ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
-      payload: false,
+  return {
+    type: ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
+    payload: false,
   }
 }
 
@@ -67,7 +67,7 @@ export function setDepartDate(departDate) {
   return {
     type: ACTION_SET_DEPART_DATE,
     payload: departDate,
-  };
+  }
 }
 
 export function setSelectedCity(city) {
@@ -78,11 +78,10 @@ export function setSelectedCity(city) {
     } else {
       dispatch(setTo(city))
     }
-    dispatch(hideCitySelector());
+    dispatch(hideCitySelector())
   }
 }
 export function showDateSelector() {
-  console.log(0)
   return {
     type: ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
     payload: true,
@@ -99,5 +98,20 @@ export function exchangeFromTo() {
     const { from, to } = getState()
     dispatch(setFrom(to))
     dispatch(setTo(from))
+  }
+}
+export function fetchCityData() {
+  return (dispatch, getState) => {
+    const { isLoadingCityData } = getState()
+    if (!isLoadingCityData) {
+      dispatch(setIsLoadingCityData(true))
+      fetch('/rest/cities?_' + Date.now())
+        .then(res => res.json())
+        .then(cityData => dispatch(setCityData(cityData)))
+        .then(cityData => dispatch(setIsLoadingCityData(false)))
+        .catch(() => {
+          dispatch(setIsLoadingCityData(false))
+        })
+    }
   }
 }
