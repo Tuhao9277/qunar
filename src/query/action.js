@@ -8,8 +8,9 @@ export const ACTION_SET_TRAINLIST = 'SET_TRAINLIST'
 export const ACTION_SET_ORDERTYPE = 'SET_ORDERTYPE'
 export const ACTION_SET_ONLYTICKETS = 'SET_ONLYTICKETS'
 export const ACTION_SET_TICKETTYPES = 'SET_TICKETTYPES'
-export const ACTION_SET_CHECKEEDTICKETTYPES = 'SET_CHECKEEDTICKETTYPES'
+export const ACTION_SET_CHECKEDTICKETTYPES = 'SET_CHECKEDTICKETTYPES'
 export const ACTION_SET_TRAINTYPES = 'SET_TRAINTYPES'
+export const ACTION_SET_DEPART_STATIONS = 'SET_DEPART_STATIONS'
 export const ACTION_SET_CHECKEDTRAINTYPES = 'SET_CHECKEDTRAINTYPES'
 export const ACTION_SET_CHECKEDDEPARTSTATTIONS = 'SET_CHECKEDDEPARTSTATTIONS'
 export const ACTION_SET_ARRIVESTATIONS = 'SET_ARRIVESTATIONS'
@@ -89,10 +90,10 @@ export function setTicketTypes(ticketTypes) {
     payload: ticketTypes,
   }
 }
-export function setCheckeedTicketTypes(checkeedTicketTypes) {
+export function setCheckedTicketTypes(checkedTicketTypes) {
   return {
-    type: ACTION_SET_CHECKEEDTICKETTYPES,
-    payload: checkeedTicketTypes,
+    type: ACTION_SET_CHECKEDTICKETTYPES,
+    payload: checkedTicketTypes,
   }
 }
 export function setTrainTypes(trainTypes) {
@@ -107,10 +108,10 @@ export function setCheckedTrainTypes(checkedTrainTypes) {
     payload: checkedTrainTypes,
   }
 }
-export function setCheckedDepartStattions(checkedDepartStattions) {
+export function setCheckedDepartStattions(checkedDepartStations) {
   return {
     type: ACTION_SET_CHECKEDDEPARTSTATTIONS,
-    payload: checkedDepartStattions,
+    payload: checkedDepartStations,
   }
 }
 export function setArriveStations(arriveStations) {
@@ -174,5 +175,11 @@ export function prevDate() {
   return (dispatch, getState) => {
     const { departDate } = getState()
     dispatch(setDepartdate(h0(departDate) - 86400 * 1000))
+  }
+}
+export function setDepartStations(departStations) {
+  return {
+    type: ACTION_SET_DEPART_STATIONS,
+    payload: departStations
   }
 }

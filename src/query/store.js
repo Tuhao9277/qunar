@@ -16,10 +16,10 @@ export default createStore(
     orderType:ORDER_DEPART,
     onlyTickets:false,
     ticketTypes:[],
-    checkeedTicketTypes:{},
+    checkedTicketTypes:{},
     trainTypes:[],
     checkedTrainTypes:{},
-    checkedDepartStattions:{},
+    checkedDepartStations:{},
     arriveStations:[],
     checkedArriveStatsions:{},
     departTimeStart:0,
@@ -28,6 +28,7 @@ export default createStore(
     arriveTimeEnd:24,
     isFiltersVisible:false,
     searchParsed:false,
+    departStations:[]
   },
   composeEnhancers(
     applyMiddleware(thunk)

@@ -8,7 +8,7 @@ import { h0 } from './../components/fp'
 import useNav from './../components/useNav'
 
 import List from './List'
-// import Bottom from './Bottom'
+import Bottom from './Bottom'
 import {
   setFrom,
   setTo,
@@ -21,8 +21,24 @@ import {
   setArriveStations,
   prevDate,
   nextDate,
+  toggleHighSpeed,
+  toggleIsFiltersVisible,
+  toggleOnlyTickets,
+  toggleOrderType,
+  setDepartStations,
+
+  setCheckedTicketTypes,
+  setCheckedTrainTypes,
+  setCheckedDepartStattions,
+  setCheckedArriveStatsions,
+  setDepartTimeStart,
+  setDepartTimeEnd,
+  setArriveTimeStart,
+  setArriveTimeEnd,
 } from './action'
 import dayjs from 'dayjs'
+import { useMemo } from 'react'
+import { bindActionCreators } from 'redux'
 
 const App = props => {
   const {
@@ -32,17 +48,23 @@ const App = props => {
     dispatch,
     departDate,
     highSpeed,
+    isFiltersVisible,
     searchParsed,
     orderType,
     onlyTickets,
-    checkeedTicketTypes,
+    ticketTypes,
+    trainTypes,
+    departStations,
+    arriveStations,
+    checkedTicketTypes,
     checkedTrainTypes,
-    checkedDepartStattions,
+    checkedDepartStations,
     checkedArriveStatsions,
     departTimeStart,
     departTimeEnd,
     arriveTimeStart,
     arriveTimeEnd,
+
   } = props
   const onBack = useCallback(() => {
     window.history.back()
@@ -68,11 +90,11 @@ const App = props => {
       .setSearch('searchParsed', searchParsed)
       .setSearch('orderType', orderType)
       .setSearch('onlyTickets', onlyTickets)
-      .setSearch('checkeedTicketTypes', Object.keys(checkeedTicketTypes).join())
+      .setSearch('checkedTicketTypes', Object.keys(checkedTicketTypes).join())
       .setSearch('checkedTrainTypes', Object.keys(checkedTrainTypes).join())
       .setSearch(
-        'checkedDepartStattions',
-        Object.keys(checkedDepartStattions).join(),
+        'checkedDepartStations',
+        Object.keys(checkedDepartStations).join(),
       )
       .setSearch(
         'checkedArriveStatsions',
@@ -90,13 +112,14 @@ const App = props => {
           dataMap: {
             directTrainInfo: {
               trains,
-              filter: { ticketType, depStation, arrStation },
+              filter: { ticketType,trainType, depStation, arrStation },
             },
           },
         } = data
         dispatch(setTrainList(trains))
         dispatch(setTicketTypes(ticketType))
-        dispatch(setTrainTypes(depStation))
+        dispatch(setTrainTypes(trainType))
+        dispatch(setDepartStations(depStation));
         dispatch(setArriveStations(arrStation))
       })
   }, [
@@ -107,9 +130,9 @@ const App = props => {
     searchParsed,
     orderType,
     onlyTickets,
-    checkeedTicketTypes,
+    checkedTicketTypes,
     checkedTrainTypes,
-    checkedDepartStattions,
+    checkedDepartStations,
     checkedArriveStatsions,
     departTimeStart,
     departTimeEnd,
@@ -122,6 +145,25 @@ const App = props => {
     prevDate,
     nextDate,
   )
+  const bottomCbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        toggleHighSpeed,
+        toggleIsFiltersVisible,
+        toggleOnlyTickets,
+        toggleOrderType,
+        setCheckedTicketTypes,
+        setCheckedTrainTypes,
+        setCheckedDepartStattions,
+        setCheckedArriveStatsions,
+        setDepartTimeStart,
+        setDepartTimeEnd,
+        setArriveTimeStart,
+        setArriveTimeEnd,
+      },
+      dispatch,
+    )
+  }, [])
   if (!searchParsed) {
     return null
   }
@@ -135,10 +177,26 @@ const App = props => {
         prev={prev}
         next={next}
       />
-      <List  list={trainList}/>
-      {
-        // <Bottom />
-      }
+      <List list={trainList} />
+      <Bottom
+        {...bottomCbs}
+        highSpeed={highSpeed}
+        orderType={orderType}
+        onlyTickets={onlyTickets}
+        isFiltersVisible={isFiltersVisible}
+        ticketTypes={ticketTypes}
+        trainTypes={trainTypes}
+        departStations={departStations}
+        arriveStations={arriveStations}
+        checkedTicketTypes={checkedTicketTypes}
+        checkedTrainTypes={checkedTrainTypes}
+        checkedDepartStations={checkedDepartStations}
+        checkedArriveStatsions={checkedArriveStatsions}
+        departTimeStart={departTimeStart}
+        departTimeEnd={departTimeEnd}
+        arriveTimeStart={arriveTimeStart}
+        arriveTimeEnd={arriveTimeEnd}
+      />
     </div>
   )
 }

@@ -7,8 +7,9 @@ import {
   ACTION_SET_ORDERTYPE,
   ACTION_SET_ONLYTICKETS,
   ACTION_SET_TICKETTYPES,
-  ACTION_SET_CHECKEEDTICKETTYPES,
+  ACTION_SET_CHECKEDTICKETTYPES,
   ACTION_SET_TRAINTYPES,
+  ACTION_SET_DEPART_STATIONS,
   ACTION_SET_CHECKEDTRAINTYPES,
   ACTION_SET_CHECKEDDEPARTSTATTIONS,
   ACTION_SET_ARRIVESTATIONS,
@@ -102,10 +103,10 @@ export default {
         return state
     }
   },
-  checkeedTicketTypes(state=[], action) {
+  checkedTicketTypes(state=[], action) {
     const { type, payload } = action
     switch (type) {
-      case ACTION_SET_CHECKEEDTICKETTYPES: {
+      case ACTION_SET_CHECKEDTICKETTYPES: {
         return payload
       }
       default:
@@ -132,7 +133,7 @@ export default {
         return state
     }
   },
-  checkedDepartStattions(state={}, action) {
+  checkedDepartStations(state={}, action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_CHECKEDDEPARTSTATTIONS: {
@@ -141,6 +142,16 @@ export default {
       default:
         return state
     }
+  },
+  departStations(state = [], action) {
+    const { type, payload } = action;
+    switch (type) {
+      case ACTION_SET_DEPART_STATIONS:
+        return payload;
+      default:
+    }
+
+    return state;
   },
   arriveStations(state=[], action) {
     const { type, payload } = action
