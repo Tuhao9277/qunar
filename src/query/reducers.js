@@ -59,6 +59,10 @@ export default {
       case ACTION_SET_HIGHSPEED: {
         return payload
       }
+      case ACTION_SET_CHECKEDTRAINTYPES:{
+        const checkedTrainTypes = payload
+        return !!(checkedTrainTypes[1] && checkedTrainTypes[5])
+      }
       default:
         return state
     }
@@ -93,7 +97,7 @@ export default {
         return state
     }
   },
-  ticketTypes(state=[], action) {
+  ticketTypes(state = [], action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_TICKETTYPES: {
@@ -103,7 +107,7 @@ export default {
         return state
     }
   },
-  checkedTicketTypes(state=[], action) {
+  checkedTicketTypes(state = [], action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_CHECKEDTICKETTYPES: {
@@ -113,7 +117,7 @@ export default {
         return state
     }
   },
-  trainTypes(state=[], action) {
+  trainTypes(state = [], action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_TRAINTYPES: {
@@ -123,17 +127,29 @@ export default {
         return state
     }
   },
-  checkedTrainTypes(state={}, action) {
+  checkedTrainTypes(state = {}, action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_CHECKEDTRAINTYPES: {
         return payload
       }
+      case ACTION_SET_HIGHSPEED: {
+        const highSpeed = payload
+        const newCheckedTrainTypes = { ...state }
+        if(highSpeed){
+          newCheckedTrainTypes[1] = true
+          newCheckedTrainTypes[5] = true
+        }else{
+          delete newCheckedTrainTypes[1]
+          delete newCheckedTrainTypes[5]
+        }
+        return newCheckedTrainTypes
+      }
       default:
         return state
     }
   },
-  checkedDepartStations(state={}, action) {
+  checkedDepartStations(state = {}, action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_CHECKEDDEPARTSTATTIONS: {
@@ -144,16 +160,16 @@ export default {
     }
   },
   departStations(state = [], action) {
-    const { type, payload } = action;
+    const { type, payload } = action
     switch (type) {
       case ACTION_SET_DEPART_STATIONS:
-        return payload;
+        return payload
       default:
     }
 
-    return state;
+    return state
   },
-  arriveStations(state=[], action) {
+  arriveStations(state = [], action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_ARRIVESTATIONS: {
@@ -163,7 +179,7 @@ export default {
         return state
     }
   },
-  checkedArriveStatsions(state={}, action) {
+  checkedArriveStatsions(state = {}, action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_CHECKEDARRIVESTATSIONS: {
@@ -173,7 +189,7 @@ export default {
         return state
     }
   },
-  departTimeStart(state=0, action) {
+  departTimeStart(state = 0, action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_DEPARTTIMESTART: {
@@ -183,7 +199,7 @@ export default {
         return state
     }
   },
-  departTimeEnd(state=24, action) {
+  departTimeEnd(state = 24, action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_DEPARTTIMEEND: {
@@ -193,7 +209,7 @@ export default {
         return state
     }
   },
-  arriveTimeStart(state=0, action) {
+  arriveTimeStart(state = 0, action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_ARRIVETIMESTART: {
@@ -203,7 +219,7 @@ export default {
         return state
     }
   },
-  arriveTimeEnd(state=24, action) {
+  arriveTimeEnd(state = 24, action) {
     const { type, payload } = action
     switch (type) {
       case ACTION_SET_ARRIVETIMEEND: {

@@ -26,13 +26,14 @@ const Option = memo(({ title, options, checkedMap, update }) => {
       <ul>
         {options.map(option => {
           return (
-          <Filter
-            key={option.value}
-            checked={option.value in checkedMap}
-            toggle={toggle}
-            {...option}
-          />
-        )})}
+            <Filter
+              key={option.value}
+              checked={option.value in checkedMap}
+              toggle={toggle}
+              {...option}
+            />
+          )
+        })}
       </ul>
     </div>
   )
@@ -83,9 +84,13 @@ const BottomModal = memo(
       return { ...checkedArriveStatsions }
     })
 
-    const [localDepartTimeStart, setLocalDepartTimeStart] = useState(departTimeStart)
+    const [localDepartTimeStart, setLocalDepartTimeStart] = useState(
+      departTimeStart,
+    )
     const [localDepartTimeEnd, setLocalDepartTimeEnd] = useState(departTimeEnd)
-    const [localArriveTimeStart, setLocalArriveTimeStart] = useState(arriveTimeStart)
+    const [localArriveTimeStart, setLocalArriveTimeStart] = useState(
+      arriveTimeStart,
+    )
     const [localArriveTimeEnd, setLocalArriveTimeEnd] = useState(arriveTimeEnd)
     const optionGroup = [
       {
@@ -113,14 +118,41 @@ const BottomModal = memo(
         update: setLocalCheckedArriveStations,
       },
     ]
+    const handleSure = () => {
+      setCheckedTicketTypes(localCheckedTicketTypes)
+      setCheckedTrainTypes(localCheckedTrainTypes)
+      setCheckedDepartStattions(localCheckedDepartStations)
+      setCheckedArriveStatsions(localCheckedArriveStations)
+
+      setDepartTimeStart(localDepartTimeStart)
+      setDepartTimeEnd(localDepartTimeEnd)
+
+      setArriveTimeStart(localArriveTimeStart)
+      setArriveTimeEnd(localArriveTimeEnd)
+      toggleIsFiltersVisible()
+    }
+    const reset = () => {
+      setlocalCheckedTicketTypes({})
+      setLocalCheckedTrainTypes({})
+      setLocalCheckedDepartStations({})
+      setLocalCheckedArriveStations({})
+      setLocalDepartTimeStart(0)
+      setLocalDepartTimeEnd(24)
+      setLocalArriveTimeStart(0)
+      setLocalArriveTimeEnd(24)
+    }
     return (
       <div className="bottom-modal">
         <div className="bottom-dialog">
           <div className="bottom-dialog-content">
             <div className="title">
-              <span className="reset">重置</span>
+              <span className="reset" onClick={reset}>
+                重置
+              </span>
 
-              <span className="ok">确定</span>
+              <span className="ok" onClick={handleSure}>
+                确定
+              </span>
             </div>
             <div className="options">
               {optionGroup.map(group => (
