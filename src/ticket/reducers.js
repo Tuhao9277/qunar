@@ -7,6 +7,7 @@ import {
   ACTION_SET_ARRIVESTATION,
   ACTION_SET_DURATIONSTR,
   ACTION_SET_TICKETS,
+  ACTION_SET_TRAIN_NUMBER,
   ACTION_SET_ISSCHEDULEVISIBLE,
   ACTION_SET_SEARCHPARSED,
 } from './actions';
@@ -23,6 +24,15 @@ export default {
   arriveDate(state = Date.now(), { type, payload }) {
     switch (type) {
       case ACTION_SET_ARRIVEDATE: {
+        return payload;
+      }
+      default:
+    }
+    return state;
+  },
+  trainNumber(state = null, { type, payload }) {
+    switch (type) {
+      case ACTION_SET_TRAIN_NUMBER: {
         return payload;
       }
       default:
