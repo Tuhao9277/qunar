@@ -33,16 +33,7 @@ const Detail = memo(props => {
         </div>
         <div className="middle">
           <p className="train-name">{trainNumber}</p>
-          <p className="train-mid">
-            <span className="left" />
-            <span
-              className="schedule"
-              onClick={toggleIsScheduleVisible}
-            >
-              时刻表{' '}
-            </span>
-            <span className="right" />
-          </p>
+          <p className="train-mid">{props.children}</p>
           <p className="train-time">耗时{durationStr}</p>
         </div>
         <div className="right">

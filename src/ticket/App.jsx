@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import dayjs from 'dayjs'
 import URI from 'urijs'
-import { TrainContext } from './context';
+import { TrainContext } from './context'
 import { h0 } from './../components/fp'
 import Header from './../components/Header'
 import Nav from './../components/Nav'
@@ -122,14 +122,11 @@ function App(props) {
           arriveStation={arriveStation}
           durationStr={durationStr}
         >
-          <span className="left"></span>
-          <span
-            className="schedule"
-            onClick={() => detailCbs.toggleIsScheduleVisible()}
-          >
-            时刻表
+          <span className="left" />
+          <span className="schedule" onClick={toggleIsScheduleVisible}>
+            时刻表{' '}
           </span>
-          <span className="right"></span>
+          <span className="right" />
         </Detail>
       </div>
       <TrainContext.Provider
@@ -143,7 +140,10 @@ function App(props) {
         <Candidate tickets={tickets} />
       </TrainContext.Provider>
       {isScheduleVisible && (
-        <div className="mask" onClick={() => detailCbs.toggleIsScheduleVisible()}>
+        <div
+          className="mask"
+          onClick={() => detailCbs.toggleIsScheduleVisible()}
+        >
           <Suspense fallback={<div>loading...</div>}>
             <Schedule
               date={departDate}
